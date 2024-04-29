@@ -1,0 +1,49 @@
+# Proyecto de Fin de Grado UOC 2024-2025
+# Autor: Alfredo Roqueta Milian
+# Descripción: Implementación de una red neuronal artificial modular
+# Este código forma parte de un proyecto de ingeniería de telecomunicaciones
+# y está destinado a ser utilizado para construir sistemas de IA modulares.
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class ModularNeuralNetwork(nn.Module):
+    def __init__(self):
+        super(ModularNeuralNetwork, self).__init__()
+        # Define los módulos o capas individuales
+        self.layer1 = nn.Linear(in_features, hidden_size)  # Primera capa
+        self.activation1 = nn.ReLU()  # Función de activación para la primera capa
+        self.layer2 = nn.Linear(hidden_size, output_size)  # Segunda capa
+
+    def forward(self, x):
+        # Define cómo se conectan los módulos en la pasada hacia adelante
+        x = self.layer1(x)
+        x = self.activation1(x)
+        x = self.layer2(x)
+        return x
+
+# Configuración inicial
+in_features = 20  # Número de características de entrada
+hidden_size = 50  # Tamaño del conjunto de neuronas ocultas
+output_size = 10  # Número de salidas deseadas
+
+# Crear la red
+network = ModularNeuralNetwork()
+
+# Definir el optimizador y la función de pérdida
+optimizer = optim.SGD(network.parameters(), lr=0.01)
+loss_function = nn.MSELoss()
+
+# Datos de ejemplo (dummy data)
+input_tensor = torch.randn(1, in_features)  # Un batch con un ejemplo
+target = torch.randn(1, output_size)  # El objetivo que la red debe aprender a predecir
+
+# Entrenamiento de ejemplo
+optimizer.zero_grad()  # Reinicia los gradientes acumulados
+output = network(input_tensor)  # Pasada hacia adelante
+loss = loss_function(output, target)  # Calcular la pérdida
+loss.backward()  # Retropropagación
+optimizer.step()  # Actualizar los pesos
+
+print(f"Loss: {loss.item()}")
